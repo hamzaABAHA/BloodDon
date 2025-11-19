@@ -20,7 +20,7 @@ public class DonorMatchingController {
 
     @GetMapping("/match")
     public List<DonorProfile> matchDonors(
-            @RequestParam String bloodType,
+            @RequestParam BloodType bloodType,
             @RequestParam String city,
             @RequestParam(defaultValue = "false") boolean sameCityOnly
     ) {

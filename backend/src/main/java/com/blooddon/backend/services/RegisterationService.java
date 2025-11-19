@@ -2,6 +2,8 @@ package com.blooddon.backend.services;
 
 import com.blooddon.backend.dto.RegisterDonorRequest;
 import com.blooddon.backend.dto.RegisterRequesterRequest;
+import com.blooddon.backend.mappers.DonorMapper;
+import com.blooddon.backend.mappers.RequesterMapper;
 import com.blooddon.backend.models.DonorProfile;
 import com.blooddon.backend.models.RequesterProfile;
 import com.blooddon.backend.models.User;
@@ -26,7 +28,7 @@ public class RegisterationService {
         this.requesterProfileRepository = requesterProfileRepository;
     }
 
-
+    // ---------------- REGISTER DONOR ----------------
     @Transactional
     public DonorProfile registerDonor(RegisterDonorRequest request) {
 
@@ -34,24 +36,17 @@ public class RegisterationService {
             throw new IllegalArgumentException("Email already in use");
         }
 
-        User user = new User(
-                request.getEmail(),
-                request.getPassword(), // later: hash this
-                User.Role.DONOR
-        );
-
+        // Create user entity
+        User user = DonorMapper.toUser(request);
         User savedUser = userRepository.save(user);
 
-        DonorProfile profile = new DonorProfile(
-                savedUser,
-                request.getFullName(),
-                request.getBloodType(),
-                request.getCity()
-        );
+        // Create donor profile
+        DonorProfile profile = DonorMapper.toDonorProfile(request, savedUser);
 
         return donorProfileRepository.save(profile);
     }
 
+    // ---------------- REGISTER REQUESTER ----------------
     @Transactional
     public RequesterProfile registerRequester(RegisterRequesterRequest request) {
 
@@ -59,21 +54,12 @@ public class RegisterationService {
             throw new IllegalArgumentException("Email already in use");
         }
 
-        User user = new User(
-                request.getEmail(),
-                request.getPassword(),
-                User.Role.REQUESTER
-        );
-
+        // Create user entity
+        User user = RequesterMapper.toUser(request);
         User savedUser = userRepository.save(user);
 
-        RequesterProfile profile = new RequesterProfile(
-                savedUser,
-                request.getFullName(),
-                request.getOrganizationName(),
-                request.getCity(),
-                request.getPhone()
-        );
+        // Create requester profile
+        RequesterProfile profile = RequesterMapper.toProfile(request, savedUser);
 
         return requesterProfileRepository.save(profile);
     }

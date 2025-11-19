@@ -23,6 +23,9 @@ public class RegisterDonorRequest {
     @NotBlank
     private String city;
 
+    @NotBlank
+    private String  phoneNumber;
+
     public RegisterDonorRequest() {
     }
 
@@ -64,5 +67,13 @@ public class RegisterDonorRequest {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public  String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(  String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

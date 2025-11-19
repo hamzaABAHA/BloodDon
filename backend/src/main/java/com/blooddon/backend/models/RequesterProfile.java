@@ -23,8 +23,9 @@ public class RequesterProfile {
     @Column(nullable = false)
     private String city;
 
-    @Column(nullable = false)
-    private String phone; // contact for emergencies
+    @Column(nullable = true)
+    private String phoneNumber;
+
 
     public RequesterProfile() {
     }
@@ -34,7 +35,7 @@ public class RequesterProfile {
         this.fullName = fullName;
         this.organizationName = organizationName;
         this.city = city;
-        this.phone = phone;
+        this.phoneNumber = phone;
     }
 
     public Long getId() {
@@ -73,11 +74,11 @@ public class RequesterProfile {
         this.city = city;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phone) {
+        this.phoneNumber = phoneNumber;
     }
 }
